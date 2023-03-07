@@ -1,10 +1,7 @@
 package pl.mateuszswiatek.endpoint;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.mateuszswiatek.dto.request.CreateUserRequest;
 import pl.mateuszswiatek.dto.response.UserResponse;
 import pl.mateuszswiatek.service.UserService;
@@ -24,7 +21,7 @@ public class UserEndpoint {
     }
 
     @PostMapping
-    public UserResponse createUser(CreateUserRequest request) {
+    public UserResponse createUser(@RequestBody CreateUserRequest request) {
         return userService.createUser(request);
     }
 }
