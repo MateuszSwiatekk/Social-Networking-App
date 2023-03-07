@@ -1,4 +1,4 @@
-package pl.mateuszswiatek;
+package pl.mateuszswiatek.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,10 +13,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //strategia tworzenia ID
-    private Long id;
+public class User extends BaseEntity{
     private String username;
     private String password;
     private String email;
