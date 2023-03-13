@@ -1,6 +1,8 @@
 package pl.mateuszswiatek.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.mateuszswiatek.converter.UserConverter;
 import pl.mateuszswiatek.dto.request.CreateUserRequest;
@@ -16,12 +18,18 @@ import java.util.stream.Collectors;
 public class UserService {
     private UserRepository userRepository;
 
-    public List<UserResponse> getUsers() {
+    public Page<UserResponse> getUsers(Pageable pageable) {
         return userRepository
-                .findAll()
-                .stream()
+                .findAll(pageable)
+                .map(user -> UserConverter.toResponse(user));
+    }
+
+    public UserResponse getUserById(Long userID) {
+        return userRepository
+                .findById(userID)
                 .map(user -> UserConverter.toResponse(user))
-                .collect(Collectors.toList());
+                .orElseThrow(() -> new NullPointerException("User does not exist"));
+
     }
 
     public UserResponse createUser(CreateUserRequest request) {
@@ -30,4 +38,10 @@ public class UserService {
 
         return UserConverter.toResponse(savedUser);
     }
+
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+
+
 }
